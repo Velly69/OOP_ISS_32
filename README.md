@@ -12,9 +12,9 @@
 
 6) Написать имплементацию алгоритма Non-blocking Michael-Scott queue algorithm 
 
-**7) Используя механизм synchronized wait notify, имплементировать Cyclic Barrier.
+**7) Используя механизм synchronized wait notify, имплементировать Cyclic Barrier.**
 
-**8) Используя механизм synchronized wait notify, имплементировать ReentrantLock
+**8) Используя механизм synchronized wait notify, имплементировать ReentrantLock**
 
 9) Используя механизм synchronized wait notify, имплементировать Phaser.
 
