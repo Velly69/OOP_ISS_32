@@ -11,8 +11,11 @@
 5) Написать собственную имплементацию алгоритма SkipList Free lock.
 
 6) Написать имплементацию алгоритма Non-blocking Michael-Scott queue algorithm 
-7) Используя механизм synchronized wait notify, имплементировать Cyclic Barrier.
-8) Используя механизм synchronized wait notify, имплементировать ReentrantLock
+
+**7) Используя механизм synchronized wait notify, имплементировать Cyclic Barrier.**
+
+**8) Используя механизм synchronized wait notify, имплементировать ReentrantLock**
+
 9) Используя механизм synchronized wait notify, имплементировать Phaser.
 
 **10) Имплементировать паттерн ThreadPool.**
