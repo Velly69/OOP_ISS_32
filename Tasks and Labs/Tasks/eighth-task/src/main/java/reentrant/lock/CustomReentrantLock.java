@@ -16,7 +16,10 @@ public class CustomReentrantLock implements CustomLock{
         if(lockHoldCount == 0){
             lockHoldCount++;
             currentHoldingThreadID = Thread.currentThread().getId();
-        } else if(currentHoldingThreadID != Thread.currentThread().getId()){
+        } else if(lockHoldCount > 0 &&
+                currentHoldingThreadID == Thread.currentThread().getId()){
+            lockHoldCount++;
+        } else {
             while (currentHoldingThreadID!= Thread.currentThread().getId()){
                 try {
                     this.wait();
@@ -26,8 +29,6 @@ public class CustomReentrantLock implements CustomLock{
                     log.log(Level.SEVERE, "Exception: ", e);
                 }
             }
-        } else {
-            lockHoldCount++;
         }
     }
 

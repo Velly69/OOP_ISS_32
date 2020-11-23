@@ -24,9 +24,8 @@ public class CustomCyclicBarrier {
                 log.log(Level.SEVERE, "Exception: ", e);
             }
         }
-
-        threadsAwait = amountOfThreads;
         notifyAll();
+        threadsAwait = amountOfThreads;
         cyclicBarrierEvent.run();
     }
 
