@@ -1,39 +1,40 @@
 package cyclic.barier;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CustomCyclicBarrier {
-    private static final Logger log = Logger.getLogger(CustomCyclicBarrier.class.getName());
-    private int amountOfThreads;
-    private int threadsAwait;
-    private Runnable cyclicBarrierEvent;
+    private final int amountOfThreads;
+    private final Runnable cyclicBarrierEvent;
+    private final AtomicInteger waiting;
 
     public CustomCyclicBarrier(int amountOfThreads, Runnable cyclicBarrierEvent) {
         this.amountOfThreads = amountOfThreads;
-        this.threadsAwait = amountOfThreads;
         this.cyclicBarrierEvent = cyclicBarrierEvent;
+        this.waiting = new AtomicInteger(amountOfThreads);
     }
 
-    public synchronized void await(){
-        --this.threadsAwait;
-        while(this.threadsAwait > 0){
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                log.log(Level.SEVERE, "Exception: ", e);
+    public void await() throws InterruptedException {
+        if (waiting.decrementAndGet() != 0) {
+            synchronized (this) {
+                while (waiting.get() != 0) {
+                    wait();
+                }
             }
         }
-        notifyAll();
-        threadsAwait = amountOfThreads;
-        cyclicBarrierEvent.run();
+        else {
+            waiting.set(amountOfThreads);
+            synchronized (this) {
+                notifyAll();
+            }
+            cyclicBarrierEvent.run();
+        }
     }
 
     public int getAmountOfThreads() {
         return amountOfThreads;
     }
 
-    public int getThreadsAwait() {
-        return threadsAwait;
+    public int getWaiting() {
+        return waiting.get();
     }
 }

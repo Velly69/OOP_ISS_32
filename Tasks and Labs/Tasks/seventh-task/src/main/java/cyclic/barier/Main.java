@@ -9,10 +9,12 @@ public class Main {
 
     public static void main(String[] args) {
         Event event = new Event(cyclicBarrier, 3000);
-        new Thread(event, "1-Thread").start();
-        new Thread(event, "2-Thread").start();
-        new Thread(event, "3-Thread").start();
-        System.out.println(cyclicBarrier.getThreadsAwait());
+        Thread a = new Thread(event, "1-Thread");
+        a.start();
+        Thread b = new Thread(event, "2-Thread");
+        b.start();
+        Thread c = new Thread(event, "3-Thread");
+        c.start();
     }
 }
 

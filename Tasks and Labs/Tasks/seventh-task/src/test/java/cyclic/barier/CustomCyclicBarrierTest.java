@@ -16,7 +16,11 @@ public class CustomCyclicBarrierTest {
 
     private void createThread(){
         Thread thread = new Thread(() -> {
-            customCyclicBarrier.await();
+            try {
+                customCyclicBarrier.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
         thread.start();
     }
@@ -39,7 +43,7 @@ public class CustomCyclicBarrierTest {
         synchronized (this){
             this.wait(2000);
         }
-       assertEquals(1, customCyclicBarrier.getThreadsAwait());
+       assertEquals(1, customCyclicBarrier.getWaiting());
     }
 
     @Test
@@ -51,7 +55,7 @@ public class CustomCyclicBarrierTest {
             this.wait(3000);
         }
         assertTrue(reached);
-        assertEquals(3, customCyclicBarrier.getThreadsAwait());
+        assertEquals(3, customCyclicBarrier.getWaiting());
     }
 
     @Test
