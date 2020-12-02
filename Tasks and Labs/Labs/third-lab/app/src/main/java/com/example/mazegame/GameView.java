@@ -22,7 +22,8 @@ public class GameView extends View {
         UP, DOWN, LEFT, RIGHT
     }
     private static Cell[][] cells;
-    private Cell player, exit;
+    private static Cell player;
+    private static Cell exit;
     private static final int COLS = 7;
     private static final int ROWS = 10;
     private static final float WALL_THICKNESS = 4;
@@ -45,7 +46,7 @@ public class GameView extends View {
         createMaze();
     }
 
-    public void createMaze(){
+    public static void createMaze(){
         Stack<Cell> stack = new Stack<>();
         Cell current, next;
 
@@ -57,7 +58,6 @@ public class GameView extends View {
         }
 
         player = cells[0][0];
-        exit = cells [COLS-1][ROWS-1];
 
         current = cells[0][0];
         current.visited = true;

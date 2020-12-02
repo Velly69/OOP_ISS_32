@@ -41,4 +41,12 @@ public class GameViewTest {
         canBeResult.add(cells[4][3]);
         assertTrue(canBeResult.contains(result));
     }
+
+    @Test
+    public void checkIsThereIsAnExit(){
+        GameView.createMaze();
+        Cell checkingExit = new Cell(COLS-1,ROWS-1);
+        Cell result = GameView.getNeighbour(cells, checkingExit);
+        assertTrue(result.topWall || result.leftWall || result.bottomWall || result.rightWall);
+    }
 }
