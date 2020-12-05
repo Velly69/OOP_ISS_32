@@ -15,8 +15,19 @@ class MichaelScottQueueTest {
         michaelScottQueue = new MichaelScottQueue<>();
     }
 
+    private Thread addTwoElementFromThread(int element) {
+        Thread thread = new Thread(() -> {
+            michaelScottQueue.enqueue(element);
+            michaelScottQueue.enqueue(element + 1);
+        });
+        thread.start();
+        return thread;
+    }
+
     private Thread addElementFromThread(int element) {
-        Thread thread = new Thread(() -> michaelScottQueue.enqueue(element));
+        Thread thread = new Thread(() -> {
+            michaelScottQueue.enqueue(element);
+        });
         thread.start();
         return thread;
     }
@@ -30,17 +41,17 @@ class MichaelScottQueueTest {
     @Test
     void shouldAddElementsFromDifferentThreads() throws InterruptedException {
         List<Thread> threads = new ArrayList<>();
-        threads.add(addElementFromThread(2));
-        threads.add(addElementFromThread(4));
-        threads.add(addElementFromThread(6));
+        threads.add(addTwoElementFromThread(2));
+        threads.add(addTwoElementFromThread(4));
+        threads.add(addTwoElementFromThread(6));
         for (Thread thread : threads) {
             thread.join();
         }
         List<Integer> resultsAfterRemove = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             resultsAfterRemove.add(michaelScottQueue.dequeue());
         }
-        for (int i = 2; i < 7; i += 2) {
+        for (int i = 2; i < 8; i++) {
             assertTrue(resultsAfterRemove.contains(i));
         }
     }
